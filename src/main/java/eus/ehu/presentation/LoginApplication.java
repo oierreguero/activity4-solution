@@ -1,4 +1,4 @@
-package com.example.javafxapp;
+package eus.ehu.presentation;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,10 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class LoginApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/javafxapp/MainView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/eus/ehu/presentation/MainView.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("JavaFX Basic App");
         stage.setScene(scene);
