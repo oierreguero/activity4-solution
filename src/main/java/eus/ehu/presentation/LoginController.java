@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration; 
 
 public class LoginController {
     @FXML
@@ -20,16 +22,28 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
+    // timer to auto-hide the error message (reusable)
+    private PauseTransition hideMessagePause;
+
     @FXML
     public void initialize() {
         messageLabel.setAlignment(Pos.CENTER);
         myButton.setDefaultButton(true);
+
+        // hide-message timer (2 seconds)
+        hideMessagePause = new PauseTransition(Duration.seconds(2));
+        hideMessagePause.setOnFinished(e -> messageLabel.setVisible(false));
     }
 
     @FXML
     private void handleLogin() {
         String login = loginField.getText();
         String password = passwordField.getText();
+
+        // cancel any pending hide action
+        if (hideMessagePause != null) {
+            hideMessagePause.stop();
+        }
 
         if ("admin".equals(login) && "123456".equals(password)) {
             messageLabel.setText("Credentials are correct");
@@ -39,6 +53,9 @@ public class LoginController {
             messageLabel.setText("Try again");
             messageLabel.setVisible(true);
             messageLabel.getStyleClass().setAll("btn","btn-danger");
+
+            // hide the error after 2 seconds
+            hideMessagePause.playFromStart();
         }
     }
 }
